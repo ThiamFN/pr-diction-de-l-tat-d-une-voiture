@@ -36,7 +36,7 @@ def load_artifacts():
 
 encoders, scaler, xgb = load_artifacts()
 
-class_names = list(encoders["Etat"].classes_)
+class_names = ["D'Occasion", "Venant"]
  
 
 # Fonction de prédiction simple
