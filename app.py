@@ -28,7 +28,7 @@ DESCRIPTION = (
 
 @st.cache_resource
 def load_artifacts():
-    encoders = jb.load("encoders.joblib")   # encodeurs 
+    encoders = jb.load("encoder.joblib")   # encodeurs 
     scaler = jb.load("scaler.joblib")       # normaliseur
     xgb = jb.load("xgb_model.joblib")       # modèle
     return encoders, scaler, xgb
