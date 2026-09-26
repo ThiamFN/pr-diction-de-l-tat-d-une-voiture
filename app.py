@@ -36,30 +36,42 @@ def load_artifacts():
 
 encoders, scaler, xgb = load_artifacts()
 
+marque = st.selectbox(
+    "Marque",
+    options=encoders["Marque"].classes_
+)
+
+transmission = st.selectbox(
+    "Transmission",
+    options=encoders["Transmission"].classes_
+)
+
+quartier = st.selectbox(
+    "Quartier",
+    options=encoders["Quartier"].classes_
+)
 class_names = ["D'Occasion", "Venant"]
  
 
 # Fonction de prédiction simple
 
 def Pred_func(marque, annee, transmission, quartier, prix):
-    # construire une ligne avec les BONS noms de colonnes, dans le BON ordre
+
     entree = pd.DataFrame([{
         "Marque": marque,
         "Année": annee,
         "Transmission": transmission,
         "Quartier": quartier,
-        "Prix": prix,
-    }])[COLONNES_FEATURES]
- 
-    # encoder chaque variable catégorielle avec son propre encoder (par nom de colonne)
+        "Prix": prix
+    }])
+
     for col in ["Marque", "Transmission", "Quartier"]:
         entree[col] = encoders[col].transform(entree[col])
- 
-    # normaliser avec le même scaler que l'entraînement (transform uniquement, jamais fit)
-    x_new = scaler.transform(entree.values)
- 
-    # prédire
+
+    x_new = scaler.transform(entree)
+
     y_pred = xgb.predict(x_new)
+
     return class_names[y_pred[0]]
  
 
